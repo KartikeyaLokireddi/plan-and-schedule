@@ -9,10 +9,7 @@ import {
   ChevronLeft, 
   ChevronRight, 
   Flame, 
-  Sparkles,
-  ArrowRight,
-  Filter,
-  Tag
+  Sparkles
 } from 'lucide-react';
 
 const CATEGORIES = [
@@ -133,25 +130,6 @@ export default function App() {
     }));
   };
 
-  // Rollover incomplete tasks from yesterday
-  const rolloverIncomplete = () => {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const yStr = yesterday.toISOString().split('T')[0];
-
-    const uncompletedOld = tasks.filter(t => t.date === yStr && !t.completed);
-    if (!uncompletedOld.length) return;
-
-    setTasks(prev => [
-      ...prev,
-      ...uncompletedOld.map(t => ({
-        ...t,
-        id: Date.now().toString() + Math.random(),
-        date: selectedDate
-      }))
-    ]);
-  };
-
   // Filter tasks
   const currentTasks = tasks.filter(t => {
     const matchesDate = t.date === selectedDate;
@@ -250,7 +228,7 @@ export default function App() {
                   <button
                     key={c.id}
                     onClick={() => setSelectedCategory(c.id)}
-                    className={`text-xs px-3 py-1 rounded-full whitespace-nowrap transition border ${
+                    className={`text-xs px-3 py-1 rounded-full border whitespace-nowrap transition ${
                       selectedCategory === c.id
                         ? 'bg-stone-900 text-white border-stone-900 shadow-sm'
                         : 'bg-white text-stone-600 border-stone-200 hover:bg-stone-50'
